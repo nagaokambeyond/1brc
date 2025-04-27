@@ -1,0 +1,10 @@
+# Visual Studio Code
+.vscode
+
+# PyCharm
+.idea
+
+# OSX
+.DS_Store
+
+
