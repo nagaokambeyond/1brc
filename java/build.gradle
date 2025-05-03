@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+group = 'com.example.onebrc'
+
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    def task = taskGraph.allTasks.find { it.name.endsWith(".main()") }
+    if (task instanceof JavaExec) {
+        task.executable = task.javaLauncher.get().executablePath.asFile.absolutePath
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs("--enable-preview")
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs("--enable-preview")
+}
