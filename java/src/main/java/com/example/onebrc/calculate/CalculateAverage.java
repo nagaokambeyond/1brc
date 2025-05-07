@@ -19,7 +19,7 @@ public class CalculateAverage {
                 final var key = array[0];
 
                 final var val = new BigDecimal(array[1]);
-                result.compute(key, (_, value) -> {
+                result.compute(key, (k, value) -> {
                     if (Objects.isNull(value)) {
                         // keyが存在しない場合
                         return new AirTemperature(val);
