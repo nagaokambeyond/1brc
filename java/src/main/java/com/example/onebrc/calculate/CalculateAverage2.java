@@ -17,7 +17,7 @@ public class CalculateAverage2 {
                 final var array = line.split(";");
                 final var key = array[0];
 
-                final var val = Integer.valueOf(array[1].replace(".", ""));
+                final var val = Integer.parseInt(array[1].replace(".", ""));
                 result.compute(key, (k, value) -> {
                     if (Objects.isNull(value)) {
                         // keyが存在しない場合
