@@ -9,10 +9,11 @@
 CPU:apple silicon m1 pro
 mem:32g
 
-## 100万行
+## 1_000_000 件
 
 | クラス名 | 時間 | 備考 |
 | - | - | - |
 | CalculateAverage | 259ms | HashMap、BigDecimal使用 |
 | CalculateAverage2 | 236ms | BigDecimal->int |
+| CalculateAverage3 | 196ms | 100_000件ずつ Executors.newFixedThreadPool(4) |
 

@@ -1,13 +1,13 @@
 package com.example.onebrc;
 
-import com.example.onebrc.calculate.CalculateAverage;
-import com.example.onebrc.calculate.CalculateAverage2;
+import com.example.onebrc.calculate.CalculateAverage3;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 class Application {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws ExecutionException, IOException, InterruptedException {
         final var url = Application.class.getClassLoader().getResource("measurements.txt");
         if (Objects.isNull(url)) {
             System.out.println("ファイルが存在しません。");
@@ -16,9 +16,9 @@ class Application {
         final var path = url.getPath();
         System.out.printf("ファイルの場所：%s%n", path);
 
-        long start = System.currentTimeMillis();
+        final var start = System.currentTimeMillis();
 
-        final var cls = new CalculateAverage2();
+        final var cls = new CalculateAverage3();
         final var result = cls.getAverage(path);
         result.keySet().stream().sorted().forEach(key -> {
             // keyでソートして表示する
@@ -26,7 +26,7 @@ class Application {
             System.out.printf("%s=%s¥n", key, value);
         });
 
-        long end = System.currentTimeMillis();
+        final var end = System.currentTimeMillis();
         System.out.println();
         final var diff = end - start;
         System.out.println(diff + "ms");
