@@ -44,24 +44,25 @@ public class CalculateAverage3 {
         Map<String, AirTemperature3> result = new HashMap<>();
 
         try (final var exec = Executors.newFixedThreadPool(MAX_THREADS)) {
-            final var PAGE = 100_000;
+            final var CHUNK_SIZE = 100_000;
 
             List<Future<Map<String, AirTemperature3>>> futures = new ArrayList<>();
 
             try (final var stream = Files.lines(Path.of(path))) {
-                List<String> param = new ArrayList<>(PAGE);
+                List<String> chunk = new ArrayList<>(CHUNK_SIZE);     // サイズを固定するとはやい
 
                 stream.forEach(line -> {
-                    if (param.size() >= PAGE) {
-                        final var future = exec.submit(new MyCallable(new ArrayList<>(param)));
+                    if (chunk.size() >= CHUNK_SIZE) {
+                        // ある程度の行数を１まとまりとして実行する
+                        final var future = exec.submit(new MyCallable(new ArrayList<>(chunk)));
                         futures.add(future);
-                        param.clear();
+                        chunk.clear();
                     }
-                    param.add(line);
+                    chunk.add(line);
                 });
 
-                if (!param.isEmpty()) {
-                    final var future = exec.submit(new MyCallable(new ArrayList<>(param)));
+                if (!chunk.isEmpty()) {
+                    final var future = exec.submit(new MyCallable(new ArrayList<>(chunk)));
                     futures.add(future);
                 }
             }
@@ -69,6 +70,7 @@ public class CalculateAverage3 {
             for (final var future : futures) {
                 final var futureResult = future.get();
                 futureResult.keySet().forEach(key -> result.compute(key, (temp, resultValue) -> {
+                    // 処理結果をマージする
                     final var val = futureResult.get(key);
                     if (Objects.isNull(resultValue)) {
                         return val;
