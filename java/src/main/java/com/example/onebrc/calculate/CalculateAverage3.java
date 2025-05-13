@@ -11,10 +11,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-class MyCallable implements Callable<Map<String, AirTemperature3>> {
+class MyCallable3 implements Callable<Map<String, AirTemperature3>> {
     private final List<String> lines;
 
-    public MyCallable(List<String> lines) {
+    public MyCallable3(List<String> lines) {
         this.lines = lines;
     }
 
@@ -54,7 +54,7 @@ public class CalculateAverage3 {
                 stream.forEach(line -> {
                     if (chunk.size() >= CHUNK_SIZE) {
                         // ある程度の行数を１まとまりとして実行する
-                        final var future = exec.submit(new MyCallable(new ArrayList<>(chunk)));
+                        final var future = exec.submit(new MyCallable3(new ArrayList<>(chunk)));
                         futures.add(future);
                         chunk.clear();
                     }
@@ -62,7 +62,7 @@ public class CalculateAverage3 {
                 });
 
                 if (!chunk.isEmpty()) {
-                    final var future = exec.submit(new MyCallable(new ArrayList<>(chunk)));
+                    final var future = exec.submit(new MyCallable3(new ArrayList<>(chunk)));
                     futures.add(future);
                 }
             }
