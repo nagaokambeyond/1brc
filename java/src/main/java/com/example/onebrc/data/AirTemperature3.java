@@ -1,5 +1,8 @@
 package com.example.onebrc.data;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class AirTemperature3 {
     private int minimumTemperature;
     private int maximumTemperature;
@@ -57,9 +60,13 @@ public class AirTemperature3 {
 
     @Override
     public String toString() {
-        final float average = (float) summaryTemperature / count / 10;
-        final float min = (float) minimumTemperature / 10;
-        final float max = (float) maximumTemperature / 10;
+        final var TEN = BigDecimal.valueOf(10);
+        final var summary = BigDecimal.valueOf(summaryTemperature);
+        final var count = BigDecimal.valueOf(this.count);
+        final var average = summary.divide(count, 2, RoundingMode.CEILING).divide(TEN, 2, RoundingMode.CEILING);
+        final var min = BigDecimal.valueOf(minimumTemperature).divide(TEN, 2, RoundingMode.CEILING);
+        final var max = BigDecimal.valueOf(maximumTemperature).divide(TEN, 2, RoundingMode.CEILING);
+
         return String.format(
             "%.2f/%.2f/%.2f",
             min, average, max
