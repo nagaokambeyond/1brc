@@ -1,6 +1,6 @@
 package com.example.onebrc;
 
-import com.example.onebrc.calculate.CalculateAverage3;
+import com.example.onebrc.calculate.CalculateAverage4;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -18,7 +18,7 @@ class Application {
 
         final var start = System.currentTimeMillis();
 
-        final var cls = new CalculateAverage3();
+        final var cls = new CalculateAverage4();
         final var result = cls.getAverage(path);
         result.keySet().stream().sorted().forEach(key -> {
             // keyでソートして表示する

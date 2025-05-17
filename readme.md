@@ -15,5 +15,6 @@ mem:32g
 | - | - | - |
 | CalculateAverage | 259ms | HashMap、BigDecimal使用 |
 | CalculateAverage2 | 236ms | BigDecimal->int |
-| CalculateAverage3 | 196ms | 100_000件ずつ Executors.newFixedThreadPool(4) |
+| CalculateAverage3 | 196ms | 100_000件ずつ Executors.newFixedThreadPool(4) ArrayList<> |
+| CalculateAverage4 | 212ms | 100_000件ずつ Executors.newFixedThreadPool(4) new String[]() |
 
